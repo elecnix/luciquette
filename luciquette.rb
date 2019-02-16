@@ -59,8 +59,8 @@ class Label
         @fd
     end
 end
-label = Label.new("LA BIÈRE",
-    :style => "Pale Ale",
+label = Label.new("InteleStout",
+    :style => "Imperial Stout",
     :srm => 10,
     :ibu => 10,
     :abv => 5,
@@ -73,21 +73,46 @@ label = Label.new("LA BIÈRE",
     :brewer => "Lucie",
     :brewdate => "2019-01-27")
 Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
+    font_families.update(
+        "Luxi" => {
+            :normal => "fonts/luximr.ttf",
+            :bold => "fonts/luximb.ttf"
+        },
+        "LifeSavers" => {
+            :normal => "fonts/LifeSavers-Regular.ttf",
+            :bold => "fonts/LifeSavers-Bold.ttf"
+        },
+        "NotoMono" => {
+            :normal => "fonts/NotoMono-Regular.ttf"
+        },
+        "Museo_Slab" => {
+            :normal => "fonts/Museo_Slab_500italic-webfont.ttf"
+        },
+        "Aller" => {
+            :normal => "fonts/Aller_Rg.ttf"
+        }
+    )
     [0, bounds.width / 2].each do |x|
         [bounds.height, bounds.height / 2].each do |y|
             bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
+                transparent(1) do
+                  fill_color "443e4c"
+                  fill_rectangle [0, 72 * 3.5], 72 * 4, 72 * 3.5
+                end
+                fill_color "ffffff"
                 move_down 10
-                font "Helvetica", :style => :bold
+                font "LifeSavers", :style => :bold
                 text " #{label.name}", :align => :center, :size => 40
-                text label.style, :align => :center, :size => 10
-                stroke_color "aaaaaa"
-                dash([3, 6], :phase => 6)
-                stroke_bounds
-                move_down 10
+                text label.style, :align => :center, :size => 16
+                #stroke_color "aaaaaa"
+                #dash([3, 6], :phase => 6)
+                #stroke_bounds
+                move_down 20
                 y_position = cursor
                 space = 6
+                font "Luxi", :size => 10
+                fill_color "aaa19d"
                 bounding_box([0, y_position], :width => 72 * 2 - space / 2, :height => 72 * 3.5 / 2) do
-                    font "Helvetica", :size => 10
                     text "SRM", :align => :right
                     text "IBU", :align => :right
                     text "ABV", :align => :right
@@ -100,7 +125,6 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                     text "DATE", :align => :right
                 end
                 bounding_box([72 * 2 + space / 2, y_position], :width => 72 * 2 - space / 2, :height => 72 * 3.5 / 2) do
-                    font "Helvetica", :size => 10
                     text " #{label.srm}"
                     text " #{label.ibu}"
                     text " #{label.abv}%"
