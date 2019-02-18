@@ -1,92 +1,56 @@
 require "prawn"
+require "json"
 Prawn::Font::AFM.hide_m17n_warning = true
-class Label
-    def initialize(
-            name,
-            p
-        )
-        @name = name
-        @style = p[:style]
-        @srm = p[:srm]
-        @brewer = p[:brewer]
-        @brewdate = p[:brewdate]
-        @bottledate = p [:bottledate]
-        @abv = p[:abv]
-        @ibu = p[:ibu]
-        @grains = p[:grains]
-        @hops = p[:hops]
-        @yeast = p[:yeast]
-        @pbd = p[:pbd]
-        @id = p[:id]
-        @fd = p[:fd]
-        @ph = p[:ph]
-        @dab = p[:dab]
-    end
-    def name
-        @name
-    end
-    def style
-        @style
-    end
-    def srm
-        @srm
-    end
-    def ibu
-        @ibu
-    end
-    def brewer
-        @brewer
-    end
-    def brewdate
-        @brewdate
-    end
-    def bottledate
-        @bottledate
-    end
-    def abv
-        @abv
-    end
-    def grains
-        @grains
-    end
-    def hops
-        @hops
-    end
-    def yeast
-        @yeast
-    end
-    def pbd
-        @pbd
-    end
-    def id
-        @id
-    end
-    def fd
-        @fd
-    end
-    def ph
-        @ph
-    end
-    def dab
-        @dab
-    end
-end
-label = Label.new("Reine des neiges",
-    :style => "Hefeweizen",
-    :srm => 5,
-    :ibu => 13,
-    :abv => 5.6,
-    :ph => 6.1,
-    :dab => 1.043,
-    :grains => "Blé malté, orge 2 rangs, munich",
-    :hops => "Hallertau Hersbruker",
-    :yeast => "Wyeast bavarian 3046",
-    :pbd => "1.050",
-    :id => "1.051",
-    :fd => "1.008",
-    :brewer => "7291",
-    :brewdate => "2019-02-03",
-    :bottledate => "2019-02-16")
+
+rdn = JSON.parse('{"name": "Reine des neiges",
+    "style" : "Hefeweizen",
+    "srm" : 5,
+    "ibu" : 13,
+    "abv" : 5.6,
+    "ph" : 6.1,
+    "pbd" : 1.043,
+    "grains" : "Blé malté, orge 2 rangs, munich",
+    "hops" : "Hallertau Hersbruker",
+    "yeast" : "Wyeast bavarian 3046",
+    "other" : "--",
+    "id" : "1.051",
+    "fd" : "1.008",
+    "brewer" : "7291",
+    "brewdate" : "2019-02-03",
+    "bottledate" : "2019-02-16"}')
+
+json_label = JSON.parse('{"name": "Pénombre",
+    "style" : "Stout à l avoine",
+    "srm" : 68,
+    "ibu" : 30,
+    "abv" : 7,
+    "grains" : "maris otter, avoine, crystal I, malte chocolat, orge torréfié",
+    "hops" : "East Kent Golding",
+    "yeast" : "Wyeast Irish Ale 1084",
+    "other" : "Irish Moss",
+    "ph" : 5.6,
+    "pbd" : 1.043,
+    "id" : "1.065",
+    "fd" : "1.012",
+    "brewer" : "7291",
+    "brewdate" : "2019-02-03",
+    "bottledate" : "2019-02-16"}')
+
+labels = JSON.parse('{"srm" : "SRM",
+    "ibu" : "IBU",
+    "abv" : "ABV",
+    "grains" : "GRAIN",
+    "hops" : "HOUBLON",
+    "yeast" : "LEVURE",
+    "other" : "Notes",
+    "ph" : "PH",
+    "pbd" : "DaB",
+    "id" : "DI",
+    "fd" : "DF",
+    "brewer" : "BRASSÉ AU",
+    "brewdate" : "LE",
+    "bottledate" : "EMBOUTEILLÉ"}')
+
 Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
     font_families.update(
         "Luxi" => {
@@ -107,70 +71,61 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
             :normal => "fonts/Aller_Rg.ttf"
         }
     )
+    guide_offset = 10
+    pouce = 72
+    label_width = pouce * 4
+    label_height = pouce * 3.5
+    marge = 10
+    jeu = 4 # jeu entre les boites
+    sections = [["srm", "ibu", "abv"],
+                ["grains"], ["hops"], ["yeast"], ["other"],
+                ["pbd", "ph"], ["id", "fd"], ["bottledate"], ["brewer", "brewdate"]]
+
     [0, bounds.width / 2].each do |x|
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "a7a7a7"
-            dash([1, 1], :phase => 1)
-            stroke_horizontal_line x - 10, x, :at => y
-            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y
-            stroke_horizontal_line x - 10, x, :at => y - 72 * 3.5
-            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y - 72 * 3.5
-            stroke_vertical_line bounds.height, bounds.height + 10, :at => 0
-            stroke_vertical_line y, y + 18, :at => x
-            stroke_vertical_line y, y + 18, :at => x + 72 * 4
-            
-            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
-                #transparent(1) do
-                #  fill_color "eeeeff"
-                #  fill_rectangle [0, 72 * 3.5], 72 * 4, 72 * 3.5
-                #end
+            dash([1, 6], :phase => 1)
+
+            bounding_box([x, y], :width => label_width, :height => label_height) do
+                stroke_bounds
                 fill_color "ffffff"
                 fill_color "000000"
-                move_down 10
                 font "LifeSavers", :style => :bold
-                text " #{label.name}", :align => :center, :size => 35
-                move_down 4
-                bounding_box([0, cursor], :width => 72 * 4 - 72 * 0.25, :height => 72 * 0.5) do
-                    #fill_color "0000FF"
-                    #fill_rectangle [0, bounds.height], 72 * 4, bounds.height
-                    text label.style, :align => :right, :size => 16
+                move_down marge
+                text " #{json_label['name']}", :align => :center, :size => 35
+                tw = json_label['style'].to_s.length + (pouce * 0.25)
+                move_down jeu
+                swidth = label_width - pouce * 0.25
+                bounding_box([0, cursor], :width => swidth, :height => pouce * 0.5) do
+                    text json_label['style'], :align => :right, :size => 16
                 end
-                stroke_color "dddddd"
-                dash([3, 6], :phase => 6)
-                #stroke_bounds
-                y_position = cursor
-                space = 6
-                font "Luxi", :size => 8
-                #fill_color "aaa19d"
-                fill_color "444444"
-                left_col_width = 1
-                bounding_box([0, y_position], :width => 72 * left_col_width - space / 2, :height => 72 * 3.5 / 2) do
-                    text "SRM", :align => :right
-                    text "IBU", :align => :right
-                    text "ABV", :align => :right
-                    text "DI/DF", :align => :right
-                    text "DaB", :align => :right
-                    text "PH", :align => :right
-                    text "GRAIN", :align => :right
-                    text "HOUBLON", :align => :right
-                    text "LEVURE", :align => :right
-                    text "BRASSAGE", :align => :right
-                    text "EMB", :align => :right
-                    text "BRASSÉE AU", :align => :right
+                stroke do
+                  stroke_color "102099"
+                  dash([1, 0], :phase => 1)
+                  lh = label_height-pouce*1.15
+                  self.line_width = 1.5
+                  stroke_line [label_width/2, lh], [label_width, lh]
+                  fill_gradient [50, 100], [150, 200], '102099', '000033'
                 end
-                bounding_box([72 * left_col_width + space / 2, y_position], :width => 72 * 4 - 72 * left_col_width - space / 2, :height => 72 * 3.5 / 2) do
-                    text " #{label.srm}"
-                    text " #{label.ibu}"
-                    text " #{label.abv}%"
-                    text " #{label.id}/#{label.fd}"
-                    text " #{label.dab}"
-                    text " #{label.ph}"
-                    text " #{label.grains}"
-                    text " #{label.hops}"
-                    text " #{label.yeast}"
-                    text " #{label.brewdate}"
-                    text " #{label.bottledate}"
-                    text " #{label.brewer}"
+                font_size = 9
+                font "Luxi", :size => font_size
+
+                sections.each do | l |
+                  col = marge
+                  ncol = l.length
+                  col_width = label_width/ncol
+                  l.each do | key |
+                    content = json_label[key].to_s
+                    largeur = content.length * font_size
+                    hauteur = (largeur / label_width + 1) * (font_size)
+                    text_box("#{labels[key]}:  #{content}", :kerning => true, :at => [col, cursor]) do
+                    end
+                    col = col + col_width
+                    if hauteur > font_size
+                      move_down hauteur - font_size # multiligne
+                    end
+                  end
+                  move_down font_size + jeu
                 end
             end
         end
