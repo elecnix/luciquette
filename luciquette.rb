@@ -52,15 +52,8 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "a7a7a7"
             dash([1, 1], :phase => 1)
-            stroke_horizontal_line x - 10, x, :at => y
-            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y
-            stroke_horizontal_line x - 10, x, :at => y - 72 * 3.5
-            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y - 72 * 3.5
-            stroke_vertical_line bounds.height, bounds.height + 10, :at => 0
-            stroke_vertical_line y, y + 18, :at => x
-            stroke_vertical_line y, y + 18, :at => x + 72 * 4
-            
             bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
+                stroke_bounds
                 fill_color "ffffff"
                 fill_color "000000"
                 move_down 10
