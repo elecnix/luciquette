@@ -1,0 +1,18 @@
+{
+    "name": "InteleStout",
+    "style" : "Stout Impérial",
+    "srm" : 50,
+    "ibu" : 72,
+    "abv" : 9.3,
+    "grains" : "64C 75m: Gambrinus Pale 1Kg, Bairds Brown 378g, Fawcetts Chocolate 378g, Briess Red Wheat 143g, CBW Trad. Dark 1.36Kg",
+    "hops" : "Columnbus 41g 60m, UK Kent Golding 21g 10m",
+    "yeast" : "Wyeast Irish Ale 1084",
+    "other" : "Irish Moss 1tsp, yeast nutrient 2 tsp @ 20m",
+    "ph" : "N/A",
+    "pbd" : "1.051 (12.5 brix)",
+    "id" : "1.085 (20.4 brix)",
+    "fd" : "1.014",
+    "brewer" : "L&N 7291",
+    "brewdate" : "2018-11-18",
+    "bottledate" : "2018-12-02"
+}
