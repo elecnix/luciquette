@@ -1,0 +1,18 @@
+{
+    "name": "Pénombre",
+    "style" : "Stout à l'avoine",
+    "srm" : 68,
+    "ibu" : 30,
+    "abv" : 7,
+    "grains" : "maris otter, avoine, crystal I, malte chocolat, orge torréfié",
+    "hops" : "East Kent Golding",
+    "yeast" : "Wyeast Irish Ale 1084",
+    "other" : "Irish Moss",
+    "ph" : 5.6,
+    "pbd" : 1.043,
+    "id" : "1.065",
+    "fd" : "1.012",
+    "brewer" : "7291",
+    "brewdate" : "2019-02-03",
+    "bottledate" : "2019-02-16"
+}

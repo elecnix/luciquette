@@ -1,40 +1,16 @@
 require "prawn"
 require "json"
+require 'optparse'
+require 'json'
+
+options = {}
+OptionParser.new do |opt|
+  opt.on('--file JSON_FILE') { |o| options[:file] = o }
+end.parse!
+
 Prawn::Font::AFM.hide_m17n_warning = true
 
-rdn = JSON.parse('{"name": "Reine des neiges",
-    "style" : "Hefeweizen",
-    "srm" : 5,
-    "ibu" : 13,
-    "abv" : 5.6,
-    "ph" : 6.1,
-    "pbd" : 1.043,
-    "grains" : "Blé malté, orge 2 rangs, munich",
-    "hops" : "Hallertau Hersbruker",
-    "yeast" : "Wyeast bavarian 3046",
-    "other" : "--",
-    "id" : "1.051",
-    "fd" : "1.008",
-    "brewer" : "7291",
-    "brewdate" : "2019-02-03",
-    "bottledate" : "2019-02-16"}')
-
-json_label = JSON.parse('{"name": "Pénombre",
-    "style" : "Stout à l avoine",
-    "srm" : 68,
-    "ibu" : 30,
-    "abv" : 7,
-    "grains" : "maris otter, avoine, crystal I, malte chocolat, orge torréfié",
-    "hops" : "East Kent Golding",
-    "yeast" : "Wyeast Irish Ale 1084",
-    "other" : "Irish Moss",
-    "ph" : 5.6,
-    "pbd" : 1.043,
-    "id" : "1.065",
-    "fd" : "1.012",
-    "brewer" : "7291",
-    "brewdate" : "2019-02-03",
-    "bottledate" : "2019-02-16"}')
+json_label = JSON.parse(File.read(options[:file]))
 
 labels = JSON.parse('{"srm" : "SRM",
     "ibu" : "IBU",
