@@ -24,7 +24,7 @@ keys = JSON.parse('{
     "pbd" : "DaB",
     "id" : "DI",
     "fd" : "DF",
-    "brewer" : "BRASSÉ AU",
+    "brewer" : "BRASSEURS",
     "brewdate" : "BRASSÉ",
     "bottledate" : "EMBOUTEILLÉ"}')
 
@@ -83,18 +83,18 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 std_keyvalue = -> (key) {
                     keyvalue.call(keys[key], label[key])
                 }
+                std_keyvalue.call('brewer')
+                std_keyvalue.call('bottledate')
+                std_keyvalue.call('brewdate')
+                keyvalue.call("DI/DF", " #{label['id']} / #{label['fd']}")
+                keyvalue.call('ABV', " #{label['abv']}%")
                 std_keyvalue.call('srm')
                 std_keyvalue.call('ibu')
-                keyvalue.call('ABV', " #{label['abv']}%")
                 std_keyvalue.call('dab')
-                keyvalue.call("DI/DF", " #{label['id']}/#{label['fd']}")
                 std_keyvalue.call('ph')
                 std_keyvalue.call('grains')
                 std_keyvalue.call('hops')
                 std_keyvalue.call('yeast')
-                std_keyvalue.call('brewdate')
-                std_keyvalue.call('bottledate')
-                std_keyvalue.call('brewer')
                 std_keyvalue.call('other')
             end
         end
