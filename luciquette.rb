@@ -10,9 +10,10 @@ end.parse!
 
 Prawn::Font::AFM.hide_m17n_warning = true
 
-json_label = JSON.parse(File.read(options[:file]))
+label = JSON.parse(File.read(options[:file]))
 
-labels = JSON.parse('{"srm" : "SRM",
+keys = JSON.parse('{
+    "srm" : "SRM",
     "ibu" : "IBU",
     "abv" : "ABV",
     "grains" : "GRAIN",
@@ -24,7 +25,7 @@ labels = JSON.parse('{"srm" : "SRM",
     "id" : "DI",
     "fd" : "DF",
     "brewer" : "BRASSÉ AU",
-    "brewdate" : "LE",
+    "brewdate" : "BRASSÉ",
     "bottledate" : "EMBOUTEILLÉ"}')
 
 Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
@@ -47,63 +48,63 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
             :normal => "fonts/Aller_Rg.ttf"
         }
     )
-    guide_offset = 10
-    pouce = 72
-    label_width = pouce * 4
-    label_height = pouce * 3.5
-    marge = 10
-    jeu = 4 # jeu entre les boites
-    sections = [["srm", "ibu", "abv"],
-                ["grains"], ["hops"], ["yeast"], ["other"],
-                ["pbd", "ph"], ["id", "fd"], ["bottledate"], ["brewer", "brewdate"]]
-
     [0, bounds.width / 2].each do |x|
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "a7a7a7"
-            dash([1, 6], :phase => 1)
-
-            bounding_box([x, y], :width => label_width, :height => label_height) do
-                stroke_bounds
+            dash([1, 1], :phase => 1)
+            stroke_horizontal_line x - 10, x, :at => y
+            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y
+            stroke_horizontal_line x - 10, x, :at => y - 72 * 3.5
+            stroke_horizontal_line 72 * 4, 72 * 4 + 10, :at => y - 72 * 3.5
+            stroke_vertical_line bounds.height, bounds.height + 10, :at => 0
+            stroke_vertical_line y, y + 18, :at => x
+            stroke_vertical_line y, y + 18, :at => x + 72 * 4
+            
+            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
                 fill_color "ffffff"
                 fill_color "000000"
+                move_down 10
                 font "LifeSavers", :style => :bold
-                move_down marge
-                text " #{json_label['name']}", :align => :center, :size => 35
-                tw = json_label['style'].to_s.length + (pouce * 0.25)
-                move_down jeu
-                swidth = label_width - pouce * 0.25
-                bounding_box([0, cursor], :width => swidth, :height => pouce * 0.5) do
-                    text json_label['style'], :align => :right, :size => 16
-                end
-                stroke do
-                  stroke_color "102099"
-                  dash([1, 0], :phase => 1)
-                  lh = label_height-pouce*1.15
-                  self.line_width = 1.5
-                  stroke_line [label_width/2, lh], [label_width, lh]
-                  fill_gradient [50, 100], [150, 200], '102099', '000033'
-                end
-                font_size = 9
-                font "Luxi", :size => font_size
-
-                sections.each do | l |
-                  col = marge
-                  ncol = l.length
-                  col_width = label_width/ncol
-                  l.each do | key |
-                    content = json_label[key].to_s
-                    largeur = content.length * font_size
-                    hauteur = (largeur / label_width + 1) * (font_size)
-                    text_box("#{labels[key]}:  #{content}", :kerning => true, :at => [col, cursor]) do
+                text " #{label['name']}", :align => :center, :size => 35
+                move_down 4
+                text label['style'], :align => :center, :size => 16
+                move_down 10
+                stroke_color "000000"
+                dash([3, 6], :phase => 6)
+                font "Luxi", :size => 8
+                fill_color "444444"
+                key_width = 72 * 1
+                col_space = 8
+                keyvalue = -> (key, value) {
+                    value = "#{value}"
+                    bb = bounding_box([0, cursor], :width => 72 * 4) do
+                        bounding_box([0, bounds.top], :width => key_width) do
+                            text key, :align => :right
+                        end
+                        bounding_box([key_width + col_space, bounds.top], :width => bounds.width - key_width) do
+                            text value
+                        end
+                        move_down 2.5
                     end
-                    col = col + col_width
-                    if hauteur > font_size
-                      move_down hauteur - font_size # multiligne
-                    end
-                  end
-                  move_down font_size + jeu
-                end
+                }
+                std_keyvalue = -> (key) {
+                    keyvalue.call(keys[key], label[key])
+                }
+                std_keyvalue.call('srm')
+                std_keyvalue.call('ibu')
+                keyvalue.call('ABV', " #{label['abv']}%")
+                std_keyvalue.call('dab')
+                keyvalue.call("DI/DF", " #{label['id']}/#{label['fd']}")
+                std_keyvalue.call('ph')
+                std_keyvalue.call('grains')
+                std_keyvalue.call('hops')
+                std_keyvalue.call('yeast')
+                std_keyvalue.call('brewdate')
+                std_keyvalue.call('bottledate')
+                std_keyvalue.call('brewer')
+                std_keyvalue.call('other')
             end
         end
     end
 end
+
