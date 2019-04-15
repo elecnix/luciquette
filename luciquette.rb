@@ -53,12 +53,13 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
             stroke_color "a7a7a7"
             dash([1, 1], :phase => 1)
             bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
-                image "images/nuit.jpg", :width => bounds.width, :height => bounds.height
+                image "images/framboise-lait.jpg", :width => bounds.width, :height => bounds.height
                 move_up bounds.height
+                blend_mode(:Normal)
                 stroke_bounds
-                fill_color "000000"
                 fill_color "ffffff"
-                move_down 10
+                fill_color "000000"
+                move_down 30
                 font "LifeSavers", :style => :bold
                 text " #{label['name']}", :align => :center, :size => 35
                 move_down 4
@@ -67,8 +68,9 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 stroke_color "000000"
                 dash([3, 6], :phase => 6)
                 font "Luxi", :size => 8
-                fill_color "444444"
                 fill_color "999999"
+                fill_color "444444"
+                fill_color "000000"
                 key_width = 72 * 1
                 col_space = 8
                 keyvalue = -> (key, value) {

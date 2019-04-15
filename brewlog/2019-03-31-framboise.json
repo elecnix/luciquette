@@ -1,0 +1,18 @@
+{
+    "name": "Framboise",
+    "style" : "Weisse",
+    "srm" : 3,
+    "ibu" : 8,
+    "abv" : 4.1,
+    "grains" : "64C 30m: Pilsner 1.8kg, Wheat 1.8kg",
+    "hops" : "Falconer's Flight 28g @ 7m",
+    "yeast" : "Wyeast American Ale 1056",
+    "other" : "Probiotique Laboratoire suisse",
+    "ph" : "3.33",
+    "pbd" : "1.036",
+    "id" : "1.036",
+    "fd" : "1.005",
+    "brewer" : "F&N 7291",
+    "brewdate" : "2019-03-31",
+    "bottledate" : "2019-04-13"
+}
