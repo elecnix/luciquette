@@ -1,0 +1,18 @@
+{
+    "name": "InteleStout",
+    "style" : "Stout Impérial",
+    "srm" : 50,
+    "ibu" : 72,
+    "abv" : 9.7,
+    "grains" : "64C 75m: Gambrinus Pale 4.3Kg, Fawcetts Brown 378g, Bairds Chocolate 378g, Briess Red Wheat 143g, CBW Amber 1.4Kg",
+    "hops" : "Columnbus 41g 60m, Golding US 21g 10m",
+    "yeast" : "White Labs WLP004 Irish Ale",
+    "other" : "",
+    "ph" : "N/A",
+    "pbd" : "1.066",
+    "id" : "1.083",
+    "fd" : "1.009",
+    "brewer" : "F&N 7291",
+    "brewdate" : "2019-03-29",
+    "bottledate" : "2019-04-13"
+}
