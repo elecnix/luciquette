@@ -50,22 +50,24 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
     )
     [0, bounds.width / 2].each do |x|
         [bounds.height, bounds.height / 2].each do |y|
-            stroke_color "a7a7a7"
+            stroke_color "b9b9b9"
             dash([1, 1], :phase => 1)
-            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
+            bounding_box([x, y], :width => 72 * 5, :height => 72 * 3.5) do
+                image "images/sprang-light.png", :height => bounds.height - 1, :position => :right
+                move_up bounds.height
                 stroke_bounds
-                fill_color "ffffff"
-                fill_color "000000"
                 move_down 10
                 font "LifeSavers", :style => :bold
-                text " #{label['name']}", :align => :center, :size => 35
-                move_down 4
-                text label['style'], :align => :center, :size => 16
-                move_down 10
+                bounding_box([80, bounds.top], :width => bounds.width - 80) do
+                    text " #{label['name']}", :align => :left, :size => 35
+                    move_down 4
+                    text label['style'], :align => :left, :size => 16
+                    move_down 10
+                end
                 stroke_color "000000"
                 dash([3, 6], :phase => 6)
                 font "Luxi", :size => 8
-                fill_color "444444"
+                fill_color "000000"
                 key_width = 72 * 1
                 col_space = 8
                 keyvalue = -> (key, value) {
