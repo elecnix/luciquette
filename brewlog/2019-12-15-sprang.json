@@ -1,0 +1,18 @@
+{
+    "name": "Sprang",
+    "style" : "Kölsch",
+    "srm" : 4,
+    "ibu" : 24,
+    "abv" : 6.2,
+    "ph" : 5.7,
+    "pbd" : 1.050,
+    "grains" : "German pils, Rye malt, Carapils",
+    "hops" : "Sterling, Nelson Sauvin, Citra",
+    "yeast" : "Wyeast 2565 Kölsch @ 16C",
+    "other" : "Gypsum, MgSO4, Rice hulls, irish moss",
+    "id" : "1.052",
+    "fd" : "1.005",
+    "brewer" : "7291",
+    "brewdate" : "2019-11-24",
+    "bottledate" : "2019-12-15"
+}
