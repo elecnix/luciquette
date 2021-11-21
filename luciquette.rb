@@ -51,21 +51,21 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
     [0, bounds.width / 2].each do |x|
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "b9b9b9"
-            dash([1, 1], :phase => 1)
+            #dash([1, 1], :phase => 1)
             bounding_box([x, y], :width => 72 * 5, :height => 72 * 3.5) do
-                image "images/sprang-light.png", :height => bounds.height - 1, :position => :right
+                image "images/diydog-bg.png", :height => bounds.height - 1, :position => :right
                 move_up bounds.height
-                stroke_bounds
+                #stroke_bounds
                 move_down 10
                 font "LifeSavers", :style => :bold
-                bounding_box([80, bounds.top], :width => bounds.width - 80) do
+                bounding_box([80, bounds.top - 10], :width => bounds.width - 80) do
                     text " #{label['name']}", :align => :left, :size => 35
                     move_down 4
                     text label['style'], :align => :left, :size => 16
                     move_down 10
                 end
                 stroke_color "000000"
-                dash([3, 6], :phase => 6)
+                #dash([3, 6], :phase => 6)
                 font "Luxi", :size => 8
                 fill_color "000000"
                 key_width = 72 * 1
