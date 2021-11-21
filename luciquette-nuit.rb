@@ -52,10 +52,9 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "a7a7a7"
             dash([1, 1], :phase => 1)
-            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
-                image "images/nuit.jpg", :width => 100, :height => bounds.height
+            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3) do
+                image "images/#{label['image']}", :height => bounds.height - 1, :position => :right
                 move_up bounds.height
-                stroke_bounds
                 fill_color "000000"
                 fill_color "ffffff"
                 move_down 10
@@ -65,7 +64,6 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 text label['style'], :align => :center, :size => 16
                 move_down 10
                 stroke_color "000000"
-                dash([3, 6], :phase => 6)
                 font "Luxi", :size => 8
                 fill_color "444444"
                 fill_color "999999"
@@ -73,7 +71,7 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 col_space = 8
                 keyvalue = -> (key, value) {
                     value = "#{value}"
-                    bb = bounding_box([0, cursor], :width => 72 * 4) do
+                    bb = bounding_box([-50, cursor], :width => 72 * 4) do
                         bounding_box([0, bounds.top], :width => key_width) do
                             text key, :align => :right
                         end
@@ -98,7 +96,6 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 std_keyvalue.call('grains')
                 std_keyvalue.call('hops')
                 std_keyvalue.call('yeast')
-                std_keyvalue.call('other')
             end
         end
     end

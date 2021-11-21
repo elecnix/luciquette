@@ -1,6 +1,6 @@
 {
-    "name": "L'usb",
-    "style" : "ESB",
+    "name": "",
+    "style" : "",
     "srm" : 19.5,
     "ibu" : 35,
     "abv" : 3.8,
@@ -15,5 +15,5 @@
     "brewer" : "7291",
     "brewdate" : "2021-10-24",
     "bottledate" : "2021-11-14",
-    "image": "usb.jpg"
+    "image": "7291-usb-nuit.png"
 }
