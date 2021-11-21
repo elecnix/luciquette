@@ -49,10 +49,10 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
         }
     )
     [0, bounds.width / 2].each do |x|
-        [bounds.height, bounds.height / 2].each do |y|
+        [bounds.height, bounds.height / 2 + 50].each do |y|
             stroke_color "a7a7a7"
             dash([1, 1], :phase => 1)
-            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3) do
+            bounding_box([x, y], :width => 72 * 4.5, :height => 72 * 3) do
                 image "images/#{label['image']}", :height => bounds.height - 1, :position => :right
                 move_up bounds.height
                 fill_color "000000"
@@ -71,7 +71,7 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
                 col_space = 8
                 keyvalue = -> (key, value) {
                     value = "#{value}"
-                    bb = bounding_box([-50, cursor], :width => 72 * 4) do
+                    bb = bounding_box([0, cursor], :width => 72 * 4) do
                         bounding_box([0, bounds.top], :width => key_width) do
                             text key, :align => :right
                         end
