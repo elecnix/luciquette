@@ -1,0 +1,19 @@
+{
+    "name": "Mont-Royal",
+    "style" : "American Pale Ale",
+    "srm" : 8.9,
+    "ibu" : 45,
+    "abv" : 3.5,
+    "ph" : 5.3,
+    "pbd" : 1.048,
+    "grains" : "2row, caramunich III",
+    "hops" : "magnum, perle, cascade",
+    "yeast" : "US-05 Safeale",
+    "other" : "vue du belvedere",
+    "id" : "1.048",
+    "fd" : "1.023",
+    "brewer" : "7291",
+    "brewdate" : "2021-10-24",
+    "bottledate" : "2021-11-14",
+    "image": "montroyal1.jpg"
+}

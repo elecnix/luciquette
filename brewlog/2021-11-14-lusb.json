@@ -1,0 +1,19 @@
+{
+    "name": "L'usb",
+    "style" : "ESB",
+    "srm" : 19.5,
+    "ibu" : 35,
+    "abv" : 3.8,
+    "ph" : 5.2,
+    "pbd" : 1.047,
+    "grains" : "pale anglais",
+    "hops" : "EKG, willamet, perle",
+    "yeast" : "S-04 Safale",
+    "other" : "",
+    "id" : "1.047",
+    "fd" : "1.026",
+    "brewer" : "7291",
+    "brewdate" : "2021-10-24",
+    "bottledate" : "2021-11-14",
+    "image": "usb.jpg"
+}

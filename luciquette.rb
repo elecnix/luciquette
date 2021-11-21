@@ -52,7 +52,9 @@ Prawn::Document.generate("out.pdf", :page_layout => :landscape) do
         [bounds.height, bounds.height / 2].each do |y|
             stroke_color "a7a7a7"
             dash([1, 1], :phase => 1)
-            bounding_box([x, y], :width => 72 * 4, :height => 72 * 3.5) do
+            bounding_box([x, y], :width => 72 * 5, :height => 72 * 3.5) do
+                image "images/#{label['image']}", :height => bounds.height - 1, :position => :right
+                move_up bounds.height
                 stroke_bounds
                 fill_color "ffffff"
                 fill_color "000000"
